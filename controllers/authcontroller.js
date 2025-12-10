@@ -1,4 +1,4 @@
-const User = require("../modles/User")
+const User = require("../models/User")
 
 const jwt = require("jsonwebtoken");
 
@@ -10,6 +10,7 @@ const generateToken = (id) =>{
 
 //Register User
 exports.registerUser = async (req, res) =>{
+    console.log("Request Body:", req.body);
     const {fullName, email, password, profileImageUrl } = req.body;
 
     //validation check
@@ -20,7 +21,7 @@ exports.registerUser = async (req, res) =>{
         //check if email already exists
         const existingUser = await User.findOne({ email});
         if (existingUser) {
-            return res.status(400).json ({messsage:"Email already in use"});
+            return res.status(400).json ({message:"Email already in use"});
         }
         //create the user
         const user = await User.create({
